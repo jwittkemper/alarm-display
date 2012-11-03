@@ -1,6 +1,5 @@
 package biz.wittkemper.gui;
 
-import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
@@ -9,29 +8,23 @@ import java.util.TimerTask;
 
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
 import javax.swing.LayoutStyle;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
-import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
 import org.jdesktop.swingx.JXTable;
 import org.jdesktop.swingx.table.TableColumnExt;
 
-import antlr.StringUtils;
 import biz.wittkemper.database.dao.DAOFactory;
 import biz.wittkemper.gui.render.MultiLineCellRenderer;
-import biz.wittkemper.gui.render.MyRenderer;
-import biz.wittkemper.gui.render.StripedTableCellRenderer;
 import biz.wittkemper.gui.tabmodels.MeldungTabModel;
 import biz.wittkemper.utils.FrameUtils;
 
@@ -56,14 +49,14 @@ public class FMeldungsDisplay extends javax.swing.JInternalFrame {
 	private JXTable tabMeldungen;
 	private JPanel BlitzRechts;
 	private JFrame master;
-	private Timer blitzTimer = new Timer();
+	private final Timer blitzTimer = new Timer();
 	Timer t = new Timer("Timer-Thread", true);
 	private JLabel lbTitel;
-	private MeldungsMelder melder;
-	private FrameUtils frameUtils = new FrameUtils();
+	private final MeldungsMelder melder;
+	private final FrameUtils frameUtils = new FrameUtils();
 	MultiLineCellRenderer multiLineRenderer = new MultiLineCellRenderer(
-	        SwingConstants.LEFT, SwingConstants.TOP);
-	
+			SwingConstants.LEFT, SwingConstants.TOP);
+
 	public FMeldungsDisplay(JFrame master, MeldungsMelder melder) {
 		super("Meldungsanzeige", false, false, false);
 		initGUI();
@@ -112,9 +105,10 @@ public class FMeldungsDisplay extends javax.swing.JInternalFrame {
 	private void startBlitz(boolean run) {
 
 		class UpdateJob implements Runnable {
+			@Override
 			public void run() {
 				blitzTimer.schedule(new BlitzTimer(PMainBlitz, BlitzLinks,
-						BlitzRechts), 250, 350);
+						BlitzRechts), 250, 300);
 			}
 		}
 
@@ -146,8 +140,7 @@ public class FMeldungsDisplay extends javax.swing.JInternalFrame {
 			this.setSize(Toolkit.getDefaultToolkit().getScreenSize());
 			this.setBounds(0, 0, 738, 579);
 			this.setFrameIcon(frameUtils.getBlaulichtIcon());
-			GroupLayout thisLayout = new GroupLayout(
-					(JComponent) getContentPane());
+			GroupLayout thisLayout = new GroupLayout(getContentPane());
 			getContentPane().setLayout(thisLayout);
 			setVisible(true);
 			{
@@ -182,15 +175,18 @@ public class FMeldungsDisplay extends javax.swing.JInternalFrame {
 					tabMeldungen.setPreferredSize(new java.awt.Dimension(709,
 							284));
 
+					tabMeldungen.setDefaultRenderer(Object.class,
+							new MultiLineCellRenderer(SwingConstants.LEFT,
+									SwingConstants.TOP));
 
-					tabMeldungen.setDefaultRenderer(Object.class, new MultiLineCellRenderer(SwingConstants.LEFT, SwingConstants.TOP));
-					
 					tabMeldungen.setRowHeight(140);
-					 
-					 tabMeldungen.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-					 tabMeldungen.setPreferredScrollableViewportSize(tabMeldungen.getPreferredSize());
 
-					
+					tabMeldungen
+							.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+					tabMeldungen
+							.setPreferredScrollableViewportSize(tabMeldungen
+									.getPreferredSize());
+
 				}
 			}
 			{
@@ -204,12 +200,14 @@ public class FMeldungsDisplay extends javax.swing.JInternalFrame {
 				lbTitel.setAlignmentY(5.0f);
 				lbTitel.setHorizontalAlignment(JLabel.CENTER);
 			}
-			thisLayout.setVerticalGroup(thisLayout.createSequentialGroup()
+			thisLayout.setVerticalGroup(thisLayout
+					.createSequentialGroup()
 					.addComponent(PMainBlitz, GroupLayout.PREFERRED_SIZE, 166,
-							GroupLayout.PREFERRED_SIZE).addGap(27)
+							GroupLayout.PREFERRED_SIZE)
+					.addGap(27)
 					.addComponent(lbTitel, GroupLayout.PREFERRED_SIZE, 32,
-							GroupLayout.PREFERRED_SIZE).addPreferredGap(
-							LayoutStyle.ComponentPlacement.UNRELATED)
+							GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
 					.addComponent(MainTab, 0, 306, Short.MAX_VALUE)
 					.addContainerGap());
 			thisLayout
@@ -257,8 +255,9 @@ public class FMeldungsDisplay extends javax.swing.JInternalFrame {
 
 			@Override
 			public void run() {
-				
+
 				TimerTask task = new TimerTask() {
+					@Override
 					public void run() {
 						RefreshMeldung();
 					}
@@ -266,7 +265,6 @@ public class FMeldungsDisplay extends javax.swing.JInternalFrame {
 				t.schedule(task, 0, 4000);
 			}
 		});
-		
 
 	}
 
