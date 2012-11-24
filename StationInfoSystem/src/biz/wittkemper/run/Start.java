@@ -4,14 +4,16 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import biz.wittkemper.gui.MainFrame;
 import biz.wittkemper.utils.Utils;
 import biz.wittkemper.utils.Utils.STATIONPROP;
 
 public class Start {
-	private static final Logger log = Logger.getLogger(Start.class.getName());
+	private static final Logger log = LoggerFactory.getLogger(Start.class
+			.getName());
 
 	/**
 	 * @param args
@@ -44,6 +46,7 @@ public class Start {
 		} catch (Exception e) {
 			// If Nimbus is not available, you can set the GUI to another look
 			// and feel.
+			log.equals(e);
 		}
 
 		new MainFrame();

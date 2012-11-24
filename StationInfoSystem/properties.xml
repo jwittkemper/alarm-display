@@ -1,4 +1,5 @@
 #Daten
-#Sat Oct 27 14:28:08 CEST 2012
-MASTER=true
+#Wed Nov 14 18:32:30 CET 2012
+MASTER=false
 DATABASE=localhost
+#DATABASE=192.168.12.103

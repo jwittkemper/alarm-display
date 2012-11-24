@@ -48,6 +48,7 @@ public class FMeldungsDisplay extends javax.swing.JInternalFrame {
 	private JScrollPane MainTab;
 	private JXTable tabMeldungen;
 	private JPanel BlitzRechts;
+	private JPanel BlitzMitte;
 	private JFrame master;
 	private final Timer blitzTimer = new Timer();
 	Timer t = new Timer("Timer-Thread", true);
@@ -100,6 +101,7 @@ public class FMeldungsDisplay extends javax.swing.JInternalFrame {
 		berechneBlitze();
 		startBlitz(true);
 		runMeldungen();
+
 	}
 
 	private void startBlitz(boolean run) {
@@ -108,7 +110,7 @@ public class FMeldungsDisplay extends javax.swing.JInternalFrame {
 			@Override
 			public void run() {
 				blitzTimer.schedule(new BlitzTimer(PMainBlitz, BlitzLinks,
-						BlitzRechts), 250, 300);
+						BlitzRechts, BlitzMitte, lbTitel), 250, 280);
 			}
 		}
 
@@ -127,12 +129,19 @@ public class FMeldungsDisplay extends javax.swing.JInternalFrame {
 	}
 
 	private void berechneBlitze() {
-		int with = master.getContentPane().getWidth() / 3;
+		int with = master.getContentPane().getWidth() / 5;
+		int links = master.getContentPane().getX();
+		int mitte = (master.getContentPane().getWidth() / 2) - (with / 2);
+		int rechts = links + master.getContentPane().getWidth();
 
-		int rechts = BlitzLinks.getLocation().x + (with * 2);
 		BlitzLinks.setSize(with, BlitzLinks.getHeight());
+		BlitzMitte.setSize(with, BlitzLinks.getHeight());
 		BlitzRechts.setSize(with + 500, BlitzRechts.getHeight());
-		BlitzRechts.setLocation(rechts, BlitzRechts.getLocation().y);
+
+		BlitzLinks.setLocation(links, BlitzRechts.getLocation().y);
+		BlitzMitte.setLocation(mitte, BlitzRechts.getLocation().y);
+		BlitzRechts.setLocation(rechts - with, BlitzRechts.getLocation().y);
+
 	}
 
 	private void initGUI() {
@@ -161,6 +170,13 @@ public class FMeldungsDisplay extends javax.swing.JInternalFrame {
 					BlitzRechts.setBorder(new LineBorder(new java.awt.Color(0,
 							0, 0), 1, false));
 					BlitzRechts.setBounds(407, 0, 329, 166);
+				}
+				{
+					BlitzMitte = new JPanel();
+					PMainBlitz.add(BlitzMitte, "ANCHOR_ENTER");
+					BlitzMitte.setBorder(new LineBorder(new java.awt.Color(0,
+							0, 0), 1, false));
+					BlitzMitte.setBounds(407, 0, 329, 166);
 				}
 			}
 			{

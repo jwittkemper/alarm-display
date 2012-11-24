@@ -17,33 +17,37 @@ import biz.wittkemper.utils.Utils;
 import biz.wittkemper.utils.Utils.STATIONPROP;
 
 public class CheckKonvert {
-	
+
 	@Test
-	public void Propertest(){
+	public void Propertest() {
 		Utils ut = new Utils();
-		
+
 		Utils.storePropertie(STATIONPROP.DATABASE, "localhost");
 		Utils.storePropertie(STATIONPROP.MASTER, "false");
 		System.out.println(Utils.getPropertie(STATIONPROP.DATABASE));
 	}
 
 	@Ignore
-	public void cheAlarm(){
-		List<Alarmierung> list = DAOFactory.getInstance().getAlarmierungDAO().getNewMessage();
-		
-		for(Alarmierung a: list){
-			System.out.println(a.getStatus().getText() + " " + a.getKennung().getBezeichnung()+ " :" + a.getText());
+	public void cheAlarm() {
+		List<Alarmierung> list = DAOFactory.getInstance().getAlarmierungDAO()
+				.getNewMessage();
+
+		for (Alarmierung a : list) {
+			System.out.println(a.getStatus().getText() + " "
+					+ a.getKennung().getBezeichnung() + " :" + a.getText());
 		}
 	}
+
 	@Ignore
-	public void check(){
+	public void check() {
 		KonvertMessage konvertMessage = new KonvertMessage(null, null);
 		konvertMessage.run();
 	}
-	
+
 	@Ignore
-	public void cheSound(){
-		File file = new File("/home/joerg/Develop/StationInfoSystem/picture/pager.wav");
+	public void cheSound() {
+		File file = new File(
+				"/home/joerg/Develop/StationInfoSystem/picture/pager.wav");
 		try {
 			AudioClip sound = new Applet().newAudioClip(file.toURL());
 			sound.play();
