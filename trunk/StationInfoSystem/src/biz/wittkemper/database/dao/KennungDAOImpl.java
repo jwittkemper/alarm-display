@@ -17,6 +17,7 @@ import biz.wittkemper.database.entity.KennungStatisik;
 public class KennungDAOImpl extends AbstractDAOImpl<Kennung, Long> implements
 		KennungDAO {
 
+	@Override
 	public List<KennungStatisik> getStatistikLaufendesJahr() {
 
 		List<KennungStatisik> auswertung = new ArrayList<KennungStatisik>();
@@ -52,41 +53,20 @@ public class KennungDAOImpl extends AbstractDAOImpl<Kennung, Long> implements
 				if (alarme != null && alarme.size() > 0) {
 					statisik.setAnzahlMeldungen(alarme.size());
 					statisik.setLetzteMeldung(alarme.get(0).getUhrzeit());
+					auswertung.add(0, statisik);
 				} else {
 					statisik.setAnzahlMeldungen(0);
 					statisik.setLetzteMeldung(null);
+					auswertung.add(auswertung.size(), statisik);
 				}
 				trx.commit();
-				auswertung.add(statisik);
+
 			} catch (RuntimeException e) {
 				statisik.setAnzahlMeldungen(0);
 				statisik.setLetzteMeldung(null);
 			}
 		}
 
-		return orderAswertung(auswertung);
-	}
-
-	private List<KennungStatisik> orderAswertung(
-			List<KennungStatisik> auswertung) {
-
-		List<KennungStatisik> lhelp = new ArrayList<KennungStatisik>();
-		for (int i = 0; i < auswertung.size(); i++) {
-			for (int j = 0; j < auswertung.size(); j++) {
-				
-				if ((auswertung.get(i).getLetzteMeldung() != null && auswertung.get(j).getLetzteMeldung() != null) && auswertung.get(i).getLetzteMeldung().after(
-						auswertung.get(j).getLetzteMeldung())) {
-					KennungStatisik k = auswertung.get(i);
-					auswertung.set(i, auswertung.get(j));
-					auswertung.set(j, k);
-				}
-				if (auswertung.get(i).getLetzteMeldung() == null && auswertung.get(j).getLetzteMeldung() != null){
-					KennungStatisik k = auswertung.get(i);
-					auswertung.set(i, auswertung.get(j));
-					auswertung.set(j, k);
-				}
-			}
-		}
 		return auswertung;
 	}
 

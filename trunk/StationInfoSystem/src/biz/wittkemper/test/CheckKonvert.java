@@ -8,7 +8,6 @@ import java.net.MalformedURLException;
 import java.util.List;
 
 import org.junit.Ignore;
-import org.junit.Test;
 
 import biz.wittkemper.database.dao.DAOFactory;
 import biz.wittkemper.database.entity.Alarmierung;
@@ -18,7 +17,7 @@ import biz.wittkemper.utils.Utils.STATIONPROP;
 
 public class CheckKonvert {
 
-	@Test
+	@Ignore
 	public void Propertest() {
 		Utils ut = new Utils();
 
@@ -47,7 +46,7 @@ public class CheckKonvert {
 	@Ignore
 	public void cheSound() {
 		File file = new File(
-				"/home/joerg/Develop/StationInfoSystem/picture/pager.wav");
+				"/home/joerg/Develop/Workspace/StationInfoSystem/picture/pager.wav");
 		try {
 			AudioClip sound = new Applet().newAudioClip(file.toURL());
 			sound.play();
