@@ -1,5 +1,5 @@
 #Daten
 #Wed Nov 14 18:32:30 CET 2012
-MASTER=false
+MASTER=true
 DATABASE=localhost
 #DATABASE=192.168.12.103

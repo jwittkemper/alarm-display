@@ -110,7 +110,7 @@ public class MainFrame extends javax.swing.JFrame implements WindowListener,
 
 	private void startMeldungTimer() {
 		checkMeldungen.schedule(new KonvertMessage(statusText, meldungsMelder),
-				delay, 15000);
+				delay, 10000);
 	}
 
 	@Override

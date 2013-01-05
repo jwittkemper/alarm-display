@@ -12,13 +12,14 @@ public class Posac_statusDAOImpl extends AbstractDAOImpl<Posac_status, Long>
 		return Posac_status.class;
 	}
 
-	public Posac_status findByStatus(int status){
-		String hql="FROM Posac_status p ";
+	@Override
+	public Posac_status findByStatus(int status) {
+		String hql = "FROM Posac_status p ";
 		hql += " Where p.posac_status = " + status;
 		List<Posac_status> list = findByQueryString(hql);
-		if(list.size()> 0){
+		if (list.size() > 0) {
 			return list.get(0);
-		}else{
+		} else {
 			return null;
 		}
 	}
